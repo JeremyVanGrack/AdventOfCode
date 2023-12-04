@@ -1,7 +1,7 @@
 import re
 
 INPUT_FILE = "Inputs/Day3_Input.txt"
-special_characters = "!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~""
+special_characters = "!#$%&'()*+,-/:;<=>?@[\]^_`{|}~"
 
 def recurseRight(line, charIdx):
     num = line[charIdx]
@@ -103,24 +103,18 @@ def parseBoard(board):
     print("parsing")
     ans = 0
     for lineIdx, line in enumerate(board):
-        # pattern = r'[0-9]+'
-        # indexes = [(m.group(), m.start()-1, m.end()+1) for m in re.finditer(pattern, line)]
-        # for idx in indexes:
-        #     if lookAdjacent(idx, lineIdx, board):
-        #         print("adding")
-        #         ans += int(idx[0])
         for charIdx, c in enumerate(line):
             if c in special_characters:
-                print(lineIdx, charIdx)
+                print(lineIdx, charIdx, c)
                 try:
                     Gears.append(sum(lookAdjacent(lineIdx, charIdx, board)))
                 except:
                     Gears = [sum(lookAdjacent(lineIdx, charIdx, board))]
     print(sum(Gears))
-    print(board)
+    # print(board)
     # for idx in indexes:
     #     print(idx)
-    print(ans)
+    # print(ans)
 
 def main():
     f = open(INPUT_FILE, "r")
@@ -129,3 +123,15 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# to parse by number
+# def parseBoard(board):
+#     print("parsing")
+#     ans = 0
+#     for lineIdx, line in enumerate(board):
+        # pattern = r'[0-9]+'
+        # indexes = [(m.group(), m.start()-1, m.end()+1) for m in re.finditer(pattern, line)]
+        # for idx in indexes:
+        #     if lookAdjacent(idx, lineIdx, board):
+        #         print("adding")
+        #         ans += int(idx[0])
