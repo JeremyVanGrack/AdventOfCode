@@ -1,5 +1,5 @@
 INPUT_FILE = "Inputs/Day7_Input.txt"
-#250104441 too high
+#250096635 too high. 249326078 & 249568863 are wrong but dont know why
 cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
 jokerCards = ['J', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K', 'A']
 HAND_SCORES = {"FiveofKind" : 6, "FourofKind" : 5, "FullHouse" : 4,
@@ -12,13 +12,13 @@ def bubbleSort(hands):
             x = hands[i][0]
             y = hands[i + j + 1][0]
             for c in range(len(x)):
-                if cards.index(x[c]) < cards.index(y[c]):
+                if jokerCards.index(x[c]) < jokerCards.index(y[c]):
                     tmp = hands[i]
                     hands[i] = hands[i + j + 1]
                     hands[i + j + 1] = tmp
                     swapped = True
                     break
-                elif cards.index(x[c]) > cards.index(y[c]):
+                elif jokerCards.index(x[c]) > jokerCards.index(y[c]):
                     break
                 
     return hands
@@ -33,48 +33,49 @@ def score(hand):
         if count == 0:
             del_keys.append(card)
 
-    # keymax = max(cardValues, key= lambda x: cardValues[x])
-    # # print(keymax)
-    # if keymax != 'J':
-    #     print(keymax, cardValues[keymax], "J", cardValues['J'])
-    #     cardValues[keymax] += cardValues['J']
-    #     print(cardValues[keymax])
+    keymax = max(cardValues, key= lambda x: cardValues[x])
+    # print(keymax)
+    if keymax != 'J':
+        # print(keymax, cardValues[keymax], "J", cardValues['J'])
+        cardValues[keymax] += cardValues['J']
+        # print(cardValues[keymax])
 
     for i in del_keys:
         cardValues.pop(i)
     
-    # if 5 in cardValues.values():
-    #     return HAND_SCORES['FiveofKind']
-    # if 4 in cardValues.values():
-    #     return HAND_SCORES['FourofKind']
-    # if 3 in cardValues.values() and 2 in cardValues.values():
-    #     return HAND_SCORES['FullHouse']
-    # if 3 in cardValues.values() and 2 not in cardValues.values():
-    #     return HAND_SCORES['ThreeofKind']
-    # if 2 in cardValues.values():
-    #     if 'J' not in cardValues.keys():
-    #         if len(cardValues) == 3:
-    #             return HAND_SCORES['TwoPair']
-    #         else:
-    #             return HAND_SCORES['OnePair']
-    #     else:
-    #         if len(cardValues) == 4:
-    #             return HAND_SCORES['ThreeofKind']
-
-    if len(cardValues) == 1:
+    if 5 in cardValues.values():
         return HAND_SCORES['FiveofKind']
-    if len(cardValues) == 2:
-        if 4 in cardValues.values():
-            return HAND_SCORES['FourofKind']
-        else:
-            return HAND_SCORES['FullHouse']
-    if len(cardValues) == 3:
-        if 3 in cardValues.values():
-            return HAND_SCORES['ThreeofKind']
-        else:
+    elif 4 in cardValues.values():
+        return HAND_SCORES['FourofKind']
+    elif 3 in cardValues.values() and 2 in cardValues.values():
+        return HAND_SCORES['FullHouse']
+    elif 3 in cardValues.values() and 2 not in cardValues.values():
+        return HAND_SCORES['ThreeofKind']
+    elif 2 in cardValues.values():
+        if ('J' in cardValues.keys() and cardValues['J'] > 1) or len(cardValues) == 3:
             return HAND_SCORES['TwoPair']
-    if len(cardValues) == 4:
-        return HAND_SCORES['OnePair']
+
+        # if 'J' not in cardValues.keys():
+        #     if len(cardValues) == 3:
+        #         return HAND_SCORES['TwoPair']
+        # else:
+        #     return HAND_SCORES['OnePair']
+        
+
+    # if len(cardValues) == 1:
+    #     return HAND_SCORES['FiveofKind']
+    # if len(cardValues) == 2:
+    #     if 4 in cardValues.values():
+    #         return HAND_SCORES['FourofKind']
+    #     else:
+    #         return HAND_SCORES['FullHouse']
+    # if len(cardValues) == 3:
+    #     if 3 in cardValues.values():
+    #         return HAND_SCORES['ThreeofKind']
+    #     else:
+    #         return HAND_SCORES['TwoPair']
+    # if len(cardValues) == 4:
+    #     return HAND_SCORES['OnePair']
         
     return HAND_SCORES['HighCard']
 
